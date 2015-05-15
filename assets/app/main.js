@@ -9,6 +9,6 @@ require.config({
 define('main', ['game'], function (Game) {
     'use strict';
 
-    var game = new Game({ el: '#ultimate' });
+    var game = new Game({ el: '#lygneo' });
     game.init();
 });
