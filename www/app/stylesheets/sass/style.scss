@@ -1,0 +1,449 @@
+//
+// Variables
+//
+$baseFontsize: 16px;
+$boardFontSize: 10px;
+// colors
+$lightBlue: #12acef;
+$normalBlue: #0f9bd9;
+$lightRed: #e74c3c;
+$ligthGreen: #27ae60;
+$lightYellow: #f1c40f;
+$grey333: #333;
+$greyCCC: #ccc;
+$greyDDD: #ddd;
+$greyEEE: #eee;
+$invalid: rgba($greyCCC, 0.5);
+$player1_square: rgba($lightRed, 0.5);
+$player2_square: rgba($lightBlue, 0.5);
+
+/*
+ * Miscellaneous
+ =================================*/
+a {
+    text-decoration: none;
+    color: $lightBlue;
+}
+a:hover,
+a:active {
+    text-decoration: underline;
+}
+.btn {
+    text-align: center;
+    border-radius: 3px;
+    border: 0;
+    width: 10em;
+    height: 2.5em;
+    margin: 0 1em;
+    position: relative;
+    display: inline-block;
+    outline: none;
+    -webkit-user-select: none;
+    user-select: none;
+    color: white;
+    background: $lightBlue;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+
+    &:hover,
+    &:active,
+    &:focus {
+        background-color: $normalBlue;
+    }
+}
+input {
+    padding: 0.5em;
+    margin: 0;
+    outline: none;
+    border: 1px solid $greyDDD;
+
+    &:focus,
+    &:active {
+        border-color: $lightBlue;
+    }
+}
+.slider {
+    min-height: 30em;
+}
+.fadeIn {
+    animation: fadeIn 1s ease both;
+    -webkit-animation: fadeIn 1s ease both;
+}
+.bounceInLeft {
+    animation: bounceInLeft 1s ease both;
+    -webkit-animation: bounceInLeft 1s ease both;
+}
+.bounceOutRight {
+    animation: bounceOutRight 0.6s ease both;
+    -webkit-animation: bounceOutRight 0.6s ease both;
+}
+.bounceInDown {
+    animation: bounceInDown 0.6s  ease both;
+    -webkit-animation: bounceInDown 0.6s ease both;
+}
+
+/*
+ * #Ultimate
+ =================================*/
+#ultimate {
+    overflow: hidden;
+    min-height: 30em;
+    font-size: $baseFontsize;
+    position: relative;
+}
+
+/*
+ * Menus
+ =================================*/
+.menu {
+    text-align: center;
+    margin-top: 4em;
+
+    ul {
+        list-style: none;
+
+        li a {
+            font-family: inherit;
+            font-size: inherit;
+            cursor: pointer;
+            display: block;
+            width: 30em;
+            padding: 1em;
+            margin: 1em auto;
+            text-transform: uppercase;
+            text-decoration: none;
+            letter-spacing: 1px;
+            font-weight: 700;
+            outline: none;
+            position: relative;
+            -webkit-transition: background-color 0.3s;
+            -moz-transition: background-color 0.3s;
+            transition: background-color 0.3s;
+            color: $lightBlue;
+            border: 3px solid $lightBlue;
+            background-color: #fff;
+
+            &:hover,
+            &:active {
+                color: #fff;
+                background-color: $lightBlue;
+            }
+        }
+    }
+}
+
+/*
+ * Board
+ =================================*/
+.board {
+    width: 47em;
+    height: 100%;
+    font-size: $boardFontSize;
+    user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    float: left;
+
+    &:after {
+        content: ' ';
+        visibility: hidden;
+        display: block;
+        height: 0;
+        clear: both;
+    }
+}
+/*
+ * Square
+ =================================*/
+.square {
+    width: 13em;
+    height: 13em;
+    padding: 1em;
+    border: 0.5em solid $greyDDD;
+    float: left;
+    position: relative;
+
+    &:nth-child(3n+2),
+    &:nth-child(3n) {
+        margin-left: -0.5em;
+    }
+    &:nth-last-child(-n+6) {
+        margin-top: -0.5em;
+    }
+    &.valid {
+        z-index: 4;
+        border-color: $lightYellow;
+    }
+    &.invalid {
+        background-color: $invalid;
+    }
+    &.guide {
+        z-index: 4;
+        animation: guide 2s infinite ease-in-out;
+        -webkit-animation: guide 2s infinite ease-in-out;
+    }
+    &.moveable {
+        .cell {
+            &:hover {
+                cursor: pointer;
+                background-color: yellow;
+                opacity: 0.4;
+            }
+            &.p1,
+            &.p2 {
+                &:hover {
+                    background: white;
+                    opacity: 1;
+                }
+            }
+        }
+    }
+    &.p1 {
+        background-color: $player1_square;
+    }
+    &.p2 {
+        background-color: $player2_square;
+    }
+}
+
+/*
+ * Cell
+ =================================*/
+.cell {
+    width: 3em;
+    height: 3em;
+    padding: 0.5em;
+    float: left;
+    border-right: 0.5em solid $greyEEE;
+    border-bottom: 0.5em solid $greyEEE;
+    opacity: 1;
+    transition: background-color 0.2s ease-in, opacity 0.2s ease-in;
+
+    &:nth-child(3n) {
+        border-right: none;
+    }
+    &:nth-last-child(-n+3) {
+        border-bottom: none;
+    }
+    &.tada:before {
+        animation: tada 5s infinite ease both;
+        -webkit-animation: tada 5s infinite ease both;
+    }
+}
+
+/*
+ * Players
+ =================================*/
+.cell {
+    &.p1,
+    &.p2 {
+        &:before {
+            width: 100%;
+            height: 100%;
+            content: '';
+            display: block;
+            opacity: 0.7;
+        }
+    }
+
+    &.p1:before {
+        background-color: $lightRed;
+    }
+    &.p2:before {
+        background-color: $lightBlue;
+    }
+}
+
+/*
+ * Status
+ =================================*/
+.status {
+    width: 30%;
+    float: left;
+    padding: 1em 1em 1em 2em;
+}
+.status__player {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+        display: inline-block;
+        width: 100%;
+        margin-bottom: 1em;
+
+        .player__cell {
+            width: 1em;
+            height: 1em;
+            opacity: 0.7;
+            margin-top: 0.2em;
+            float: left;
+
+            &.player1 {
+                background-color: $lightRed;
+            }
+            &.player2 {
+                background-color: $lightBlue;
+            }
+        }
+        .player__name {
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 0.3em 0 0 0.5em;
+        }
+        .player__status {
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            background-color: $ligthGreen;
+            margin-top: 0.2em;
+            float: right;
+        }
+    }
+}
+.status__online-players {
+    margin: 0;
+    text-align: right;
+    font-size: 12px;
+
+    span {
+        color: red;
+    }
+}
+
+/*
+ * Chat
+ =================================*/
+.chat {
+    float: left;
+    width: 30%;
+    padding: 0 1em 1em 2em;
+}
+.chat__contents {
+    list-style: none;
+    height: 18em;
+    border: 1px solid $greyDDD;
+    margin: 0;
+    padding: 0.5em;
+    overflow-x: hidden;
+    overflow-y: scroll;
+
+}
+.chat__time {
+    margin-right: 1em;
+}
+.chat__from {
+    font-weight: bold;
+}
+.chat__content {
+    text-align: justify;
+}
+.chat__input {
+    margin-top: 1em;
+    padding: 0.5em;
+    width: calc(100% - 1em);
+    font-size: 14px;
+    outline: none;
+    border: 1px solid $greyDDD;
+
+    &:focus,
+    &:active {
+        border-color: $lightBlue;
+    }
+}
+
+/*
+ * About
+ =================================*/
+
+.about {
+    .heart {
+        color: $lightRed;
+        margin: 0 0.5em;
+        animation: beap 0.8s 0.2s infinite linear;
+        -webkit-animation: beap 0.8s 0.2s infinite linear;
+    }
+    .menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+/*
+ * Rules
+ =================================*/
+
+.rules {
+    .content {
+        font-size: 1.2em;
+
+        .title {
+            text-align: center;
+        }
+        ul {
+            list-style: lower-roman;
+            padding-left: 2em;
+
+            li {
+                margin: 0.5em 0;
+            }
+        }
+    }
+}
+
+/*
+ * Soon
+ =================================*/
+
+.soon {
+    .menu {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+    }
+}
+
+/*
+ * Modal
+ =================================*/
+
+.overlay {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.4);
+    z-index: 4;
+
+    .modal {
+        position: absolute;
+        top: 50%;
+        width: 30em;
+        height: 7em;
+        background: white;
+        left: 50%;
+        margin-top: -9em;
+        margin-left: -15em;
+        padding: 1.5em;
+        box-shadow: 0 5px 26px 0 rgba(0, 0, 0, 0.8);
+
+        p {
+            margin: 0;
+            padding: 1em 0 0 0;
+            text-align: center;
+        }
+        input {
+            font-size: 20px;
+            width: 20em;
+        }
+    }
+}
+
+@import 'keyframes';
+@import 'loader';
+@import 'fonts';
